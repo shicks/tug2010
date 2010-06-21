@@ -1,0 +1,16 @@
+\documentclass{beamer}
+\usetheme{Berlin}
+
+\title{Improving marginpars and floats}
+\author{Stephen Hicks}
+\date{29 June 2010}
+\def\inputsrc#1{{%
+  \catcode`\\12\catcode`\{12\catcode`\}12%
+  \obeylines\obeyspaces\ttfamily
+  \input #1
+}}
+\begin{document}
+\begin{frame}[fragile]
+\inputsrc{margins-bad}
+\end{frame}
+\end{document}

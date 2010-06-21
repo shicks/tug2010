@@ -1,0 +1,75 @@
+\documentclass{beamer}
+
+\usepackage{color}
+
+\usetheme{Berlin}
+
+\title{Improving marginpars and floats}
+\author{Stephen Hicks}
+\date{29 June 2010}
+
+%% \def\sidebyside#1{{%
+%%   \catcode`\$0\catcode`\^1\catcode`\&2%
+%%   $catcode`$\12$catcode`${12$catcode`$}12%
+%%   $obeylines$obeyspaces$ttfamily
+%%   $input #1
+%% &}
+
+\begingroup\obeylines\gdef\col
+#1\uncol
+{{\color{red}#1}}\endgroup
+
+\def\inputsrc#1{{%
+  \catcode`\\12\catcode`\{12\catcode`\}12\catcode`\%0%
+  \obeylines\obeyspaces\ttfamily
+  \input #1
+}}
+
+\def\sidebyside#1{%
+  \hbox to \textwidth{
+    \hskip-.2\textwidth
+    \setbox0\vbox to 10pc{%
+      \hsize=0.5\textwidth
+      \small\inputsrc{#1}%
+      \vfill
+    }%
+    \wd0=0.5\textwidth\box0%
+    \fbox{\includegraphics[height=15pc,clip]{#1}}%
+  }%
+}
+
+\begin{document}
+
+\errorcontextlines=12
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\section*{Outline}
+\begin{frame}
+  \tableofcontents
+\end{frame}
+
+\section{Margins}
+\subsection{Introduction}
+\begin{frame}[fragile]
+  \frametitle{\LaTeX{} deals poorly with long margin notes}
+  \sidebyside{margins-bad} % prints source next to product...
+  %\inputsrc{margins-bad}
+  Why shouldn't this ``just work''?
+\end{frame}
+
+\begin{frame}
+  \frametitle{What we expected\ldots}
+%  \sidebyside{margins-bad-expected}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Common workarounds}
+  \begin{itemize}
+    \item last-minute \verb|\vskip| tweaks, which break when pages change
+  \end{itemize}
+\end{frame}
+
+\end{document}
