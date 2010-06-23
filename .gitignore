@@ -1,0 +1,15 @@
+*.aux
+*.log
+*.dvi
+*.nav
+*.out
+*.ps
+*.vrb
+*.toc
+*.snm
+*.eps
+*.pdf
+*.sty
+*~
+
+inlinetest.tex
