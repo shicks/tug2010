@@ -1,0 +1,16 @@
+\documentclass{memoir}
+\usepackage{lipsum}
+\usepackage[debug]{marginfix}
+\begin{document}
+\large\sloppy\lipsum[1]
+\AllowDisorderedFloat{figure}
+\begin{figure}[t]
+  \hrule height 5in
+  \caption{tall}
+\end{figure}
+\begin{figure}[t]
+  \hrule height 1in
+  \caption{short}
+\end{figure}
+\lipsum[2-4]
+\end{document}

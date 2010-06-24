@@ -21,7 +21,9 @@
 #1\uncol
 {{\color{red}#1}}\endgroup
 
+\def\gobble#1{}
 \def\cs#1{\texttt{\expandafter\string\csname#1\endcsname}}
+\def\lit#1{\expandafter\gobble\string#1}
 
 \def\inputsrc#1{{%
   \catcode`\\12\catcode`\{12\catcode`\}12\catcode`\%0%
@@ -210,7 +212,7 @@
   \frametitle{Beyond the basics}
   \begin{block}{Additional features}
     \begin{itemize}
-    \item |\marginparpush| works the same as in \LaTeX
+    \item |\marginparpush| works the same as standard \LaTeX
     \item |\marginskip{|\emph{length}|}| adds an incompressible gap
     \item |\mparshift{|\emph{length}|}| allows adjusting one note's position
     \item |\extendmargin{|\emph{length}|}| makes this page's margin longer
@@ -230,10 +232,60 @@
   \begin{block}{While we're at it\ldots}
     \begin{itemize}
     \item margin notes treated internally similar to floats
-    \item many people frustrated by unpredictable behavior of floats
+    \item many people frustrated by unpredictable float behavior
+      \begin{itemize}
+      \item countless packages (\texttt{placeins}, \texttt{float},
+        \texttt{here}, \ldots)
+      \item how many know what \texttt{[!]} actually does?
+      \end{itemize}
     \item how to deal with figures in the margin?
     \end{itemize}
   \end{block}
 \end{frame}
 
+\begin{frame}
+  \frametitle{\LaTeX's float routines\\\normalsize(\cs{@addtocurcol})}
+  \begin{block}{Reasons floats aren't where they're expected}
+    \begin{itemize}
+    \item float of the same type already on the deferred list
+    \item too many floats or not enough room left on page
+    \item not enough text (cf. \cs{textfraction}) but not declared \texttt{[p]}
+    \item \texttt{[!]} often doesn't help
+    \end{itemize}
+  \end{block}
+  \vskip 2pc
+  Massive confusion when subsequent floats disappear too!
+\end{frame}
+
+\begin{frame}
+  \frametitle{A better alternative?\\\normalsize(first attempt)}
+  \begin{block}{Well, a \emph{simpler} alternative, anyway}
+    \begin{itemize}
+    \item often users don't care about strictly ordered floats
+      \begin{itemize}
+      \item (as long as the numbers come out in the right order)
+      \end{itemize}
+    \item rather than deferring, option to \emph{disorder}/\emph{renumber}
+    \item \texttt{[h]} could try harder, forcing a page break if necessary (?)
+    \item \texttt{[p]} should always be assumed
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+
+
+
+\begin{frame}
+  \frametitle{Concerns/Caveats}
+  \begin{block}{Corner cases}
+    \begin{itemize}
+    \item \LaTeX\ source littered with corner cases, many of which
+      I don't understand and probably missed (e.g. \cs{@kludgeins},
+        \cs{@bsphack}, \ldots)
+    \item currently the margin and float code all tied together:
+      still need to separate
+    \end{itemize}
+  \end{block}
+\end{frame}
 \end{document}
