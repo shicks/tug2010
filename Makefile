@@ -1,7 +1,7 @@
 pages=margins-bad margins-bad-expected
 pagesdvi=$(addsuffix .dvi,$(pages))
 pageseps=$(addsuffix .eps,$(pages))
-svgfigs=example1.eps example2.eps example3.eps example4.eps
+svgfigs=example1.eps example2.eps example3.eps example4.eps example5.eps
 
 .PHONY:all clean
 

@@ -60,7 +60,7 @@
 \end{frame}
 
 \section{Margins}
-\subsection{Introduction}
+\subsection{Introduction: the problem}
 \begin{frame}[fragile]
   \frametitle{\LaTeX{} deals poorly with long margin notes}
   \sidebyside{margins-bad} % prints source next to product...
@@ -89,6 +89,7 @@
   \end{block}
 \end{frame}
 
+\subsection{\protect\LaTeX's margin handling}
 \begin{frame}
   \frametitle{\LaTeX's \cs{marginpar} macro\\\normalsize
   (\texttt{ltfloat.dtx} and \texttt{ltoutpout.dtx})}
@@ -109,6 +110,7 @@
     (Usually) prevents intersection, but allows falling through bottom}
 \end{frame}
  
+\subsection{Improving margins}
 \begin{frame}
   \frametitle{A different approach\\\normalsize(devised by Andy Ruina)}
   \begin{block}{Goals: margin notes should\ldots}
@@ -137,12 +139,12 @@
   \begin{itemize}
   \item |\newtoks\marginlist|
     \vskip0.5pc
-  \item In |\output| routine after a |\marginpar|{\small (via |\@addmarginpar|)},
+  \item In |\output| routine after a |\marginpar| {\small(via |\@addmarginpar|)},
     \begin{itemize}
     \item Append |\note{text}{\@pageht}| to |\marginlist|
     \end{itemize}
     \vskip0.5pc
-  \item In page-building |\output| routine{\small (via |\@combinefloats|)},
+  \item In page-building |\output| routine {\small(via |\@combinefloats|)},
     \begin{itemize}
     \item Run |\marginlist| with |\note=\note@down| keeping track of
       bottom of last note and total vertical space, and adding notes
@@ -208,6 +210,27 @@
   }
 \end{frame}
 
+\begin{frame}
+  \frametitle{Discussion}
+  \hbox to 1.1\textwidth{%
+    \hskip-.2\textwidth
+    \hfill
+    \includegraphics[height=0.6\textheight]{example5}
+    \hfill
+    \rlap{\vbox{\hsize=0.4\textwidth\begin{itemize}
+        \item gauranteed to work
+        \item imagine a sixth note
+          \begin{itemize}
+          \item exact threshold size
+          \item bigger $\to$ defer (2--5$\downarrow$)
+          \end{itemize}
+        \item important to wait
+      \end{itemize}\vskip4pc}}%
+    \hphantom{\includegraphics[height=0.6\textheight]{example1}}%
+    \hfill
+  }
+\end{frame}
+
 \begin{frame}[fragile]
   \frametitle{Beyond the basics}
   \begin{block}{Additional features}
@@ -227,8 +250,10 @@
   \end{block}
 \end{frame}
 
+\section{Floats}
+\subsection{Common confusion}
 \begin{frame}
-  \frametitle{Floats}
+  \frametitle{Floats\\\normalsize(warning: mostly speculative)}
   \begin{block}{While we're at it\ldots}
     \begin{itemize}
     \item margin notes treated internally similar to floats
@@ -238,6 +263,7 @@
         \texttt{here}, \ldots)
       \item how many know what \texttt{[!]} actually does?
       \end{itemize}
+    \item order of specifiers is irrelevant
     \item how to deal with figures in the margin?
     \end{itemize}
   \end{block}
@@ -257,34 +283,78 @@
   Massive confusion when subsequent floats disappear too!
 \end{frame}
 
+\subsection{Renumbering floats}
 \begin{frame}
-  \frametitle{A better alternative?\\\normalsize(first attempt)}
+  \frametitle{A better alternative?}
   \begin{block}{Well, a \emph{simpler} alternative, anyway}
     \begin{itemize}
     \item often users don't care about strictly ordered floats
       \begin{itemize}
-      \item (as long as the numbers come out in the right order)
+      \item (as long as the numbers end up in the right order)
       \end{itemize}
     \item rather than deferring, option to \emph{disorder}/\emph{renumber}
-    \item \texttt{[h]} could try harder, forcing a page break if necessary (?)
-    \item \texttt{[p]} should always be assumed
+    %\item \texttt{[h]} could try harder, forcing a page break if necessary (?)
+    \item \texttt{[p]} always assumed
     \end{itemize}
   \end{block}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Renumbering floats\\\normalsize(patching into \cs{refstepcounter})}
+  \begin{block}{Float Placement List}
+    \begin{itemize}
+    \item attach unique identifier to each floating object
+    \item assign numbers during page-building
+    \item include margin figures too, since we hold them anyway
+    \item keep track in \texttt{.aux} file, inconsistency warnings
+    \item can opt-in on a per-type or per-instance basis
+    \end{itemize}
+  \end{block}
+\end{frame}
 
-
-
+\begin{frame}
+  \frametitle{Moving on\ldots}
+  \begin{block}{Current implementation}
+    \begin{itemize}
+    \item defined in terms of macros changing \cs{@float}'s behavior
+    \item requested features: require even/odd pages or back-to-back
+    \end{itemize}
+  \end{block}
+  \begin{block}{A complete overhaul of float placement specifiers?}
+    \begin{itemize}
+    \item map each \texttt{htbp!} specifier to control sequences run
+      \begin{itemize}
+      \item immediately in place,
+      \item immediately in output routine,
+      \item when starting a new page, and
+      \item at final float placement
+      \end{itemize}
+    \item upshots
+      \begin{itemize}
+      \item order could matter
+      \item hook in extra specifiers (e.g. \texttt{[H]}) non-invasively
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+\end{frame}
 
 \begin{frame}
   \frametitle{Concerns/Caveats}
   \begin{block}{Corner cases}
     \begin{itemize}
     \item \LaTeX\ source littered with corner cases, many of which
-      I don't understand and probably missed (e.g. \cs{@kludgeins},
-        \cs{@bsphack}, \ldots)
-    \item currently the margin and float code all tied together:
-      still need to separate
+      I don't understand and probably missed 
+      \begin{itemize}
+      \item \cs{@kludgeins}, \cs{@bsphack}, \ldots
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+  \begin{block}{Cleaning up}
+    \begin{itemize}
+    \item currently margin and float code all tied together
+      \begin{itemize}
+      \item need to separate out \texttt{marginfix} into own package
+      \end{itemize}
     \end{itemize}
   \end{block}
 \end{frame}
