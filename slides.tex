@@ -4,8 +4,11 @@
 
 \usetheme{Pittsburgh}
 
+\def\google{{\color{blue}G\color{red}o\color{yellow}o\color{blue}g\color{green}l\color{red}e}}
+%\def\google{Google}
+
 \title{Improving marginpars and floats}
-\author{Stephen Hicks\\Google, Inc.}
+\author{Stephen Hicks\\}%\noexpand\google, Inc.}
 \date{TUG 2010 San Francisco\\29 June 2010}
 
 \DefineShortVerb{\|}
@@ -52,12 +55,16 @@
 
 \begin{frame}
   \titlepage
+\unitlength=1pc
+\begin{picture}(0,0)(0,0)
+  \put(10.7,8){\google, Inc}
+\end{picture}
 \end{frame}
 
-\section*{Outline}
-\begin{frame}
-  \tableofcontents
-\end{frame}
+%% \section*{Outline}
+%% \begin{frame}
+%%   \tableofcontents
+%% \end{frame}
 
 \section{Margins}
 \subsection{Margin notes: the problem}
