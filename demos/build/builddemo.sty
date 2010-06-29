@@ -1,0 +1,111 @@
+\usepackage{graphicx,color}
+
+\pagestyle{empty}
+
+\def\one{\def\notes{SISI}\def\glues{ZZZ}}
+\def\two{\def\notes{LZZZ}\def\glues{ZZZ}\mb{84pt}}
+\def\three{\def\notes{LZZZ}\def\glues{SZZ}\mb{84pt}\mt{142pt}}
+\def\four{\def\notes{LLZZ}\def\glues{SZZ}\mb{244pt}}
+\def\five{\def\notes{LLZZ}\def\glues{SSZ}\mb{244pt}\mt{398pt}}
+\def\six{\def\notes{LLLZ}\def\glues{SSZ}\mb{428pt}\mt{582pt}}
+\def\seven{\def\notes{ZZfZ}\def\glues{ZZZ}\mo{82pt}}
+\def\eight{\def\notes{ZLLZ}\def\glues{ZZZ}\mo{82pt}}
+\def\nine{\def\notes{ZLLZ}\def\glues{ZZF}\mo{0pt}}
+\def\ten{\def\notes{FLLZ}\def\glues{fZF}\mo{0pt}}
+\def\eleven{\def\notes{FLLZ}\def\glues{ZZZ}}
+
+\let\xa\expandafter
+\makeatletter
+\@mparswitchfalse
+
+\def\red#1{\color{red}\mathbf{#1}}
+
+\def\mb#1{\unitlength1pc\begin{picture}(0,0)(0,0)
+    \put(4,-46.5){\Huge\texttt{\cs{textheight}=500pt}}
+    \put(4,-48.25){\Huge\texttt{\cs{marginboxspace}=#1}}
+  \end{picture}}
+\def\mt#1{\unitlength1pc\begin{picture}(0,0)(0,0)
+    \put(4,-50){\Huge\texttt{\cs{margintotalspace}=#1}}
+  \end{picture}}
+
+\def\mo#1{\unitlength1pc\begin{picture}(0,0)(0,0)
+    \put(4,-48.25){\Huge\texttt{\cs{marginoverflow}=#1}}
+  \end{picture}}
+
+{\lccode`[=`p\lccode`]=`t\lowercase{\gdef\remove@pt#1[]{#1}}}
+
+\def\cs#1{\texttt{\xa\string\csname#1\endcsname}}
+\def\drawbox#1#2{\fbox{\setbox0\hbox to 0.4\marginparwidth{%
+  \dimen@=-\dimexpr#2/2-8pt\relax
+  \unitlength=1pt%
+  \begin{picture}(0,0)(0,0)%
+    \put(5,\expandafter\remove@pt\the\dimen@){\Huge#2}%
+  \end{picture}%
+  \Huge#1}\dp0=\dimexpr#2-18pt\relax\box0}}
+\def\gluebox#1#2{\fbox{\setbox0\hbox to 0.4\marginparwidth{%
+      \lower\dimexpr#1/2+4pt\relax\hbox to 0.4\marginparwidth{\Huge\hfill#2\hfill}}\dp0=#1\box0}}
+
+\def\noteS#1#2{$^{\red#1}$\marginpar{\smash{\hskip 0\marginparwidth\drawbox{#1}{#2}}}}
+\def\noteI#1#2{$^{\red#1}$\marginpar{\smash{\hskip 0.5\marginparwidth\drawbox{#1}{#2}}}}
+\def\glueZ#1#2{}
+%\def\glueS#1#2{\marginpar{\smash{\lower12pt\hbox{\Huge\ *}}\vskip#1\smash{\hskip 0\marginparwidth\gluebox{#2}}}}
+\def\glueS#1#2{\marginpar{\vskip#1\smash{\lower30pt\hbox{\Huge\ *}}\smash{\hskip 0\marginparwidth\gluebox{#2}{#2}}}}
+\def\glueF#1#2{\marginpar{\vskip#1\smash{\lower30pt\hbox{\Huge\ }}\smash{\hskip 0\marginparwidth\gluebox{#2}{#2}}}}
+\def\gluef#1#2{\marginpar{\vskip-8pt\smash{\lower30pt\hbox{\Huge\ }}\smash{\hskip 0\marginparwidth\gluebox{#2}{#2}}}}
+\def\noteZ#1#2{$^{\red#1}$}
+
+\def\noteL#1#2{$^{\red#1}$\marginpar{{\hskip 0\marginparwidth\drawbox{#1}{#2}}}}
+\def\notef#1#2{$^{\red#1}$\marginpar{\vskip20pt{\hskip 0\marginparwidth\drawbox{#1}{#2}}}}
+\def\noteF#1#2{$^{\red#1}$\marginpar{\vskip6pt{\hskip 0\marginparwidth\drawbox{#1}{#2}}}}
+
+\def\rec#1#2#3{\texttt{\cs{marginbox}\{\drawbox{#1}{#2}\}\{#3\}}}
+
+\def\pop#1#2{\expandafter\@pop#1\@END#1{#2}}
+\def\@pop#1#2\@END#3#4{\def#3{#2}\csname#4#1\endcsname}
+\def\glue{\pop\glues{glue}}
+\def\note{\pop\notes{note}}
+
+\def\lipsum{
+\Huge\sloppy
+Lorem\glue{-20pt}{58pt} ipsum dolor sit amet, consectetuer
+adipiscing elit. Ut purus elit, vestibulum ut, placerat ac,
+adipiscing vitae,\note{1}{84pt} felis. Curabitur dictum gravida mauris.
+Nam arcu
+libero, nonummy eget, consectetuer id, vulputate a, magna. Donec
+vehicula augue eu neque. Pellentesque habitant\glue{-34pt}{96pt}%
+\glue{-8pt}{14pt} morbi
+tristique
+senectus et netus et malesuada fames ac turpis egestas. Mauris ut
+leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna
+fringilla ultrices.\note{2}{160pt}
+Phasellus eu tellus sit amet tortor gravida
+placerat. Integer sapien est, iaculis in, pretium quis, viverra ac,
+nunc.\note{3}{184pt}
+Praesent eget sem vel leo ultrices bibendum. Aenean faucibus.
+Morbi dolor nulla, malesuada eu, pulvinar at, mollis ac, nulla.
+Curabitur auctor semper nulla. Donec varius orci eget risus. Duis
+nibh mi, congue eu, accumsan eleifend,\note{4}{64pt} sagittis quis,
+diam. Duis
+eget orci sit amet orci dignissim rutrum.
+}
+
+\def\ruler{{
+  \def\r{%
+    \smash{\raise5pt\hbox{\llap{\the\count0pt\hskip.6pc}%
+        \vrule height 4.7pt depth -4.5pt width 2pc\hskip4pc}}%
+    \advance\count0 by 12\relax
+    \ifnum\count0<240\vskip1pc\expandafter\r\fi
+  }
+  \unitlength=1pc%
+  \count0=0%
+  \begin{picture}(0,0)(6,0)
+    \put(-2.9,2.5){\hbox{\texttt{\string\@pageht}}}
+    \put(0,0){\vtop{\r}}
+  \end{picture}
+}}
+
+\def\finish{\vadjust{\global\output\xa{\the\output\global\output{\setbox0\box255}}\penalty-10000}}
+
+\makeatother
+
+%\def\ruler{}

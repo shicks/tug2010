@@ -60,17 +60,9 @@
 \end{frame}
 
 \section{Margins}
-\subsection{Introduction: the problem}
-\begin{frame}[fragile]
-  \frametitle{\LaTeX{} deals poorly with long margin notes}
-  \sidebyside{margins-bad} % prints source next to product...
-  %\inputsrc{margins-bad}
-  \vskip-1pc Why shouldn't this ``just work''?
-\end{frame}
-
+\subsection{Margin notes: the problem}
 \begin{frame}
-  \frametitle{What we expected\ldots}
-  \sidebyside{margins-bad-expected}
+  \frametitle{Margin demo}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -140,8 +132,9 @@
   \item |\newtoks\marginlist|
     \vskip0.5pc
   \item In |\output| routine after a |\marginpar| {\small(via |\@addmarginpar|)},
+    \vskip-0.35pc
     \begin{itemize}
-    \item Append |\note{text}{\@pageht}| to |\marginlist|
+    \item Append |\note{\BOX}{\@pageht}| to |\marginlist|
     \end{itemize}
     \vskip0.5pc
   \item In page-building |\output| routine {\small(via |\@combinefloats|)},
