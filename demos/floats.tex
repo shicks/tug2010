@@ -1,0 +1,34 @@
+\documentclass{memoir}
+\makeatletter
+\def\fnum@figure{\the\c@figure}
+\def\@makecaption#1#2{\vskip4pt\Huge #1: #2}
+\makeatother
+\usepackage{lipsum,nonfloat}
+\usepackage{marginfix}
+%\AllowDisorderedFloat{figure}
+
+\begin{document}
+\sloppy\Large
+%
+\lipsum[1]
+%
+\begin{figure}[t]
+  \hrule height 7in
+  \caption{tall}
+\end{figure}
+%
+\begin{figure}[ht]
+  \hrule height 1in
+  \caption{short}
+\end{figure}
+%
+\lipsum[2]
+%
+\marginpar{
+  \hrule height 2in
+  \figcaption{margin} % (nonfloat package)
+}
+%
+\lipsum[3-5]
+%
+\end{document}

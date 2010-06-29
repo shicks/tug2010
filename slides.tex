@@ -62,7 +62,40 @@
 \section{Margins}
 \subsection{Margin notes: the problem}
 \begin{frame}
+  \frametitle{Background/acknowledgments}
+  \begin{itemize}
+    \item Andy Ruina (Cornell) and Rudra Pratap (IIT Bangalore)
+    \item \emph{Introduction to Statics and Dynamics}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Concerns/Caveats}
+  \begin{block}{Caveats}
+    \begin{itemize}
+    \item \LaTeX\ source littered with corner cases, many of which
+      I don't understand and probably missed 
+      \begin{itemize}
+      \item \cs{@kludgeins}, \cs{@bsphack}, \ldots
+      \end{itemize}
+    \item Con\TeX{}t might already do all this\ldots?
+    \end{itemize}
+  \end{block}
+  \begin{block}{Cleaning up}
+    \begin{itemize}
+    \item currently everything tied together
+      \begin{itemize}
+      \item can't get one part without all the rest
+      \item factor into separate packages, or provide options
+      \end{itemize}
+    \item plan: submit to CTAN late July (name ideas?)
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
   \frametitle{Margin demo}
+  \hbox to \textwidth{\hfill\Huge$\Uparrow$\hfill}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -75,8 +108,7 @@
       \item (custom macro to insert the |\vskip|)
       \end{itemize}
     \item time-consuming to determine correct skips
-    \item broken whenever page breaks change
-    \item motivation: Ruina/Pratap dynamics text
+    \item broken whenever anything changes
     \end{itemize}
   \end{block}
 \end{frame}
@@ -117,9 +149,9 @@
       \addtocounter{enumi}{-1}
     \item save all margin notes in float boxes until whole page builds
     \item try to put each box at the proper location
-      \begin{itemize}
-      \item keep track of total box height so we know when we're full
-      \end{itemize}
+%      \begin{itemize}
+%      \item keep track of total box height so we know when we're full
+%      \end{itemize}
     \item push boxes down so they don't intersect
     \item push boxes up so they don't fall off bottom
     \end{enumerate}
@@ -151,78 +183,83 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Example\smash{\llap{\lower1.5pc\hbox{\normalsize(step 1)}}}}
-  \hbox to 1.1\textwidth{%
-    \hskip-.2\textwidth
-    \hfill
-    \rlap{\vbox{\hsize=0.4\textwidth\begin{itemize}
-        \item page of text with 5 marginpars
-        \item \LaTeX\ would push 3 and 5 down
-        \item 5 would fall off bottom
-      \end{itemize}\vskip5pc}}%
-    \hphantom{\includegraphics[height=0.6\textheight]{example1}}%
-    \hfill
-    \includegraphics[height=0.6\textheight]{example1}
-    \hfill
-  }
+  \frametitle{Margin construction demo}
+  \hbox to \textwidth{\hfill\Huge$\Leftarrow$\hfill}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Example\smash{\llap{\lower1.5pc\hbox{\normalsize(step 2)}}}}
-  \hbox to 1.1\textwidth{%
-    \hskip-.2\textwidth
-    \hfill
-    \includegraphics[height=0.6\textheight]{example1}
-    \hfill
-    \includegraphics[height=0.6\textheight]{example2}
-    \hfill
-  }
-\end{frame}
+%% \begin{frame}
+%%   \frametitle{Example\smash{\llap{\lower1.5pc\hbox{\normalsize(step 1)}}}}
+%%   \hbox to 1.1\textwidth{%
+%%     \hskip-.2\textwidth
+%%     \hfill
+%%     \rlap{\vbox{\hsize=0.4\textwidth\begin{itemize}
+%%         \item page of text with 5 marginpars
+%%         \item \LaTeX\ would push 3 and 5 down
+%%         \item 5 would fall off bottom
+%%       \end{itemize}\vskip5pc}}%
+%%     \hphantom{\includegraphics[height=0.6\textheight]{example1}}%
+%%     \hfill
+%%     \includegraphics[height=0.6\textheight]{example1}
+%%     \hfill
+%%   }
+%% \end{frame}
 
-\begin{frame}
-  \frametitle{Example\smash{\llap{\lower1.5pc\hbox{\normalsize(step 3)}}}}
-  \hbox to 1.1\textwidth{%
-    \hskip-.2\textwidth
-    \hfill
-    \includegraphics[height=0.6\textheight]{example2}
-    \hfill
-    \includegraphics[height=0.6\textheight]{example3}
-    \hfill
-  }
-\end{frame}
+%% \begin{frame}
+%%   \frametitle{Example\smash{\llap{\lower1.5pc\hbox{\normalsize(step 2)}}}}
+%%   \hbox to 1.1\textwidth{%
+%%     \hskip-.2\textwidth
+%%     \hfill
+%%     \includegraphics[height=0.6\textheight]{example1}
+%%     \hfill
+%%     \includegraphics[height=0.6\textheight]{example2}
+%%     \hfill
+%%   }
+%% \end{frame}
 
-\begin{frame}
-  \frametitle{Example\smash{\llap{\lower1.5pc\hbox{\normalsize(finished)}}}}
-  \hbox to 1.1\textwidth{%
-    \hskip-.2\textwidth
-    \hfill
-    \includegraphics[height=0.6\textheight]{example3}
-    \hfill
-    \includegraphics[height=0.6\textheight]{example4}
-    \hfill
-  }
-\end{frame}
+%% \begin{frame}
+%%   \frametitle{Example\smash{\llap{\lower1.5pc\hbox{\normalsize(step 3)}}}}
+%%   \hbox to 1.1\textwidth{%
+%%     \hskip-.2\textwidth
+%%     \hfill
+%%     \includegraphics[height=0.6\textheight]{example2}
+%%     \hfill
+%%     \includegraphics[height=0.6\textheight]{example3}
+%%     \hfill
+%%   }
+%% \end{frame}
 
-\begin{frame}
-  \frametitle{Discussion}
-  \hbox to 1.1\textwidth{%
-    \hskip-.2\textwidth
-    \hfill
-    \includegraphics[height=0.6\textheight]{example5}
-    \hfill
-    \rlap{\vbox{\hsize=0.4\textwidth\begin{itemize}
-        \item gauranteed to work
-        \item imagine a sixth note
-          \begin{itemize}
-          \item exact threshold size
-          \item bigger $\to$ defer (2--5$\downarrow$)
-          \end{itemize}
-        \item important to wait
-      \end{itemize}\vskip4pc}}%
-    \hphantom{\includegraphics[height=0.6\textheight]{example1}}%
-    \hfill
-  }
-\end{frame}
+%% \begin{frame}
+%%   \frametitle{Example\smash{\llap{\lower1.5pc\hbox{\normalsize(finished)}}}}
+%%   \hbox to 1.1\textwidth{%
+%%     \hskip-.2\textwidth
+%%     \hfill
+%%     \includegraphics[height=0.6\textheight]{example3}
+%%     \hfill
+%%     \includegraphics[height=0.6\textheight]{example4}
+%%     \hfill
+%%   }
+%% \end{frame}
+
+%% \begin{frame}
+%%   \frametitle{Discussion}
+%%   \hbox to 1.1\textwidth{%
+%%     \hskip-.2\textwidth
+%%     \hfill
+%%     \includegraphics[height=0.6\textheight]{example5}
+%%     \hfill
+%%     \rlap{\vbox{\hsize=0.4\textwidth\begin{itemize}
+%%         \item gauranteed to work
+%%         \item imagine a sixth note
+%%           \begin{itemize}
+%%           \item exact threshold size
+%%           \item bigger $\to$ defer (2--5$\downarrow$)
+%%           \end{itemize}
+%%         \item important to wait
+%%       \end{itemize}\vskip4pc}}%
+%%     \hphantom{\includegraphics[height=0.6\textheight]{example1}}%
+%%     \hfill
+%%   }
+%% \end{frame}
 
 \begin{frame}[fragile]
   \frametitle{Beyond the basics}
@@ -256,7 +293,7 @@
         \texttt{here}, \ldots)
       \item how many know what \texttt{[!]} actually does?
       \end{itemize}
-    \item order of specifiers is irrelevant
+    \item order of \texttt{[htbp]} specifiers is irrelevant
     \item how to deal with figures in the margin?
     \end{itemize}
   \end{block}
@@ -290,6 +327,11 @@
     \item \texttt{[p]} always assumed
     \end{itemize}
   \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Float demo}
+  \hbox to \textwidth{\hfill\Huge$\Rightarrow$\hfill}
 \end{frame}
 
 \begin{frame}
@@ -332,24 +374,4 @@
   \end{block}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Concerns/Caveats}
-  \begin{block}{Corner cases}
-    \begin{itemize}
-    \item \LaTeX\ source littered with corner cases, many of which
-      I don't understand and probably missed 
-      \begin{itemize}
-      \item \cs{@kludgeins}, \cs{@bsphack}, \ldots
-      \end{itemize}
-    \end{itemize}
-  \end{block}
-  \begin{block}{Cleaning up}
-    \begin{itemize}
-    \item currently margin and float code all tied together
-      \begin{itemize}
-      \item need to separate out \texttt{marginfix} into own package
-      \end{itemize}
-    \end{itemize}
-  \end{block}
-\end{frame}
 \end{document}
