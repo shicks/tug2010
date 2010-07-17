@@ -19,7 +19,7 @@ $(pageseps):%.eps:%.dvi
 	dvips -E -o - $< | \
 	    sed -e 's/BoundingBox:.*/BoundingBox: 0 0 612 792/' > $@
 
-slides.1:slides.tex $(pageseps) $(svgfigs)
+slides.1:slides.tex $(pageseps) $(svgfigs) inlinedef.sty marginfix.sty
 	latex slides.tex
 
 slides.dvi:slides.1
